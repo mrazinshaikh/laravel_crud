@@ -27,7 +27,7 @@ return new class extends Migration
         Illuminate\Support\Facades\DB::table('users')->insert([
             'name' => 'Test User 1',
             'email' => 'test@email.com',
-            'password' => Illuminate\Support\Facades\Hash::make('test@email.com'),
+            'password' => Illuminate\Support\Facades\Hash::make('Test@1234'),
             'is_admin' => true,
         ]);
     }
