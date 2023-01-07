@@ -24,5 +24,7 @@ Auth::routes(['register' => false]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/orders', [OrdersController::class, 'index'])->name('orders');
-Route::resource('user', UserController::class);
+Route::group(['middleware' => 'is_admin'], function () {
+    Route::get('/orders', [OrdersController::class, 'index'])->name('orders');
+    Route::resource('user', UserController::class);
+});
