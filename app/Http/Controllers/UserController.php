@@ -93,20 +93,20 @@ class UserController extends Controller
 
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users', 'email')->ignore($user->id),],
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users', 'email')->ignore($user->id)],
             'password' => 'nullable|string|min:5',
             'is_admin' => '',
         ]);
 
         $user->name = $validated['name'];
         $user->email = $validated['email'];
-        if (!is_null($validated['password'])) {
+        if (! is_null($validated['password'])) {
             $user->password = Hash::make($validated['password']);
         }
         $user->is_admin = array_key_exists('is_admin', $validated);
         $user->save();
 
-        return redirect(route('user.index'))->with(['status' => 'info', 'message' => "User <a href='" . route('user.edit', $user->id) . "'>#$user->id</a> Updated Successfully"]);
+        return redirect(route('user.index'))->with(['status' => 'info', 'message' => "User <a href='".route('user.edit', $user->id)."'>#$user->id</a> Updated Successfully"]);
     }
 
     /**
@@ -120,6 +120,6 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->delete();
 
-        return redirect()->back()->with(['status' => 'info', 'message' => 'User ' . $user->name . ' Created Successfully']);
+        return redirect()->back()->with(['status' => 'info', 'message' => 'User '.$user->name.' Created Successfully']);
     }
 }
